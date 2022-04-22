@@ -49,7 +49,11 @@ func main() {
 	check(err)
 
 	if len(matches) == 0 {
-		log.Fatal("no display found")
+		matches, err = filepath.Glob("/sys/devices/pci*/*/*/backlight/*/brightness")
+		check(err)
+		if len(matches) == 0 {
+			log.Fatal("no display found")
+		}
 	}
 	curf := matches[0]
 	if len(matches) > 1 || display != "" {
